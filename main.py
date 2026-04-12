@@ -42,7 +42,7 @@ def draw():
 
 def draw_menu():
     screen.fill((50, 100, 150))
-    screen.draw.text("SNAKE GAME - KODLAND", center=(WIDTH // 2, 80), fontsize=48, color="white")
+    screen.draw.text("SNAKE GAME - UPIS", center=(WIDTH // 2, 80), fontsize=48, color="white")
     for name, rect in menu_buttons.items():
         if name == "music":
             cor = "darkgreen" if music_on else "gray"
