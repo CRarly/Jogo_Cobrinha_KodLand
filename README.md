@@ -1,77 +1,121 @@
-# Snake Game - Kodland Edition
+# Snake Game - KodLand
 
-Este projeto é uma implementação do clássico jogo da cobrinha (Snake) desenvolvido em Python, utilizando a biblioteca PgZero. O jogo foi desenvolvido como parte de um desafio educacional, com restrições específicas sobre bibliotecas permitidas e funcionalidades obrigatórias.
+![Thumbnail do jogo](docs/images/gameplay_screen.png)
 
-## Descrição
+Projeto de um jogo no estilo **Snake**, desenvolvido em **Python** com **Pygame Zero (PgZero)**. O jogador controla a cobra, coleta maçãs para aumentar a pontuação e precisa evitar colisões com as bordas e com o próprio corpo.
 
-O jogador controla uma cobra que cresce ao comer maçãs espalhadas pela tela. O objetivo é obter a maior pontuação possível sem colidir com as paredes ou com o próprio corpo da cobra.
+## Documentação rápida
 
-## Funcionalidades
+- [GDD - Game Design Document](docs/GDD.md)
+- [SDD - Software Design Document](docs/SDD.md)
 
-- Menu inicial com três botões funcionais: Iniciar, Música (ligar/desligar) e Sair.
-- Execução de música de fundo durante o jogo.
-- Efeitos sonoros distintos para a coleta de maçã e para o Game Over.
-- Sprite personalizada para cabeça, corpo e cauda da cobra.
-- Sprite de maçã com imagem.
-- Tela de fundo com imagem customizada.
-- Sistema de pausa acionado pela tecla espaço.
-- Contador de pontuação exibido em tempo real.
+## Visão geral
 
-## Controles
+Este projeto implementa uma versão educacional do clássico jogo da cobrinha, com foco em:
 
-- Setas do teclado (↑, ↓, ←, →): controlam o movimento da cobra.
-- Tecla Espaço: pausa e retoma o jogo.
-- Mouse: usado para interagir com os botões do menu.
+- organização simples de projeto para ensino;
+- menu inicial funcional;
+- trilha sonora e efeitos sonoros;
+- sprites personalizados para cabeça, corpo e cauda;
+- pontuação em tempo real;
+- pausa durante a partida.
+
+A estrutura foi mantida enxuta para facilitar estudo, manutenção e apresentação do funcionamento do jogo em sala de aula ou em atividades práticas.
+
+## Funcionalidades implementadas
+
+- Menu com botões de **Start**, **Music** e **Exit**.
+- Alternância de música de fundo.
+- Sistema de movimentação por grade.
+- Geração aleatória de maçãs em posições válidas.
+- Crescimento da cobra ao coletar maçãs.
+- Detecção de colisão com paredes.
+- Detecção de colisão com o próprio corpo.
+- Retorno ao menu após o fim da partida.
+- Exibição da pontuação no HUD.
+- Sistema de pausa com tecla de espaço.
+
+## Tecnologias utilizadas
+
+- **Python**
+- **Pygame Zero (PgZero)**
+- Biblioteca padrão `random`
 
 ## Como executar
 
-1. Certifique-se de ter o Python 3.13+ instalado.
-2. Instale a biblioteca PgZero:
-   ```bash
-   pip install pgzero
-   ```
-3. Execute o jogo com o comando:
-   ```bash
-   pgzrun main.py
-   ```
+1. Instale o **Python 3**.
+2. Instale o **PgZero**:
 
-## Estrutura de diretórios esperada
-
-O jogo espera a seguinte estrutura de diretórios:
-
+```bash
+pip install pgzero
 ```
-project/
-│
+
+3. Execute o jogo na pasta do projeto:
+
+```bash
+pgzrun main.py
+```
+
+## Controles
+
+- **Setas direcionais**: movem a cobra.
+- **Barra de espaço**: pausa ou retoma a partida.
+- **Mouse**: interage com os botões do menu.
+
+## Regras do jogo
+
+- O objetivo é fazer a maior pontuação possível.
+- Cada maçã coletada aumenta a pontuação em **1 ponto**.
+- Ao comer uma maçã, a cobra cresce.
+- O jogo termina se a cabeça da cobra tocar:
+  - as bordas da tela;
+  - qualquer parte do próprio corpo.
+
+## Estrutura do projeto
+
+```text
+Jogo_Cobrinha_KodLand-main/
 ├── main.py
+├── README.md
+├── docs/
+│   ├── GDD.md
+│   ├── SDD.md
+│   └── images/
+│       ├── gameplay_screen.png
+│       └── menu_screen.png
 ├── images/
-│   ├── background.png
 │   ├── apple.png
+│   ├── background.png
 │   ├── snake.png
-│   ├── snake_head_up.png
 │   ├── snake_head_down.png
 │   ├── snake_head_left.png
 │   ├── snake_head_right.png
-│   ├── snake_tail_up.png
+│   ├── snake_head_up.png
 │   ├── snake_tail_down.png
 │   ├── snake_tail_left.png
 │   ├── snake_tail_right.png
-│
-├── sounds/
-│   ├── collect.wav
-│   ├── gameover.wav
-│
+│   ├── snake_tail_up.png
+│   └── thumbnail.png
 ├── music/
-│   ├── music.mp3
+│   └── music.mp3
+└── sounds/
+    ├── collect.wav
+    └── gameover.wav
 ```
 
-## Requisitos do Desafio
+## Organização dos assets
 
-- Utilização apenas de `pgzrun`, `random` e `Rect` (do pygame).
-- Implementação de interface gráfica simples e funcional.
-- Sem utilização de bibliotecas gráficas adicionais como Pygame completo.
-- Sprites e sons devidamente organizados nas pastas padrão do PgZero.
+- `images/`: sprites e plano de fundo.
+- `sounds/`: efeitos sonoros de coleta e derrota.
+- `music/`: trilha principal do jogo.
+- `docs/`: documentação funcional e técnica.
 
-## Autor
+## Observações importantes
 
-Arly Alves  
-Desenvolvido como parte do desafio Kodland para ensino de lógica e programação com Python.
+- O projeto foi estruturado para ser simples e didático, com a lógica concentrada em um único arquivo principal.
+- O fluxo atual retorna diretamente ao menu quando ocorre **Game Over**, sem uma tela intermediária de resultado.
+- A documentação foi atualizada com base no script existente e nas telas fornecidas do menu e da gameplay.
+
+## Créditos
+
+Desenvolvido por **Arly Alves** em contexto educacional, com proposta de aprendizagem prática sobre lógica de jogos, organização de assets e documentação de projeto.
