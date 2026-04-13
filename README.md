@@ -2,44 +2,33 @@
 
 ![Thumbnail do jogo](docs/images/gameplay_screen.png)
 
-Projeto de um jogo no estilo **Snake**, desenvolvido em **Python** com **Pygame Zero (PgZero)**. O jogador controla a cobra, coleta maçãs para aumentar a pontuação e precisa evitar colisões com as bordas e com o próprio corpo.
+Projeto de um jogo no estilo **Snake**, desenvolvido em **Python** com **Pygame Zero (PgZero)**. O jogador controla a cobra em uma grade, coleta maçãs para aumentar a pontuação e precisa evitar colisões com as bordas da tela e com o próprio corpo.
 
-## Documentação rápida
+## Documentação do projeto
 
 - [GDD - Game Design Document](docs/GDD.md)
 - [SDD - Sound Design Document](docs/SDD.md)
 
 ## Visão geral
 
-Este projeto implementa uma versão educacional do clássico jogo da cobrinha, com foco em:
+Este projeto apresenta uma versão educacional do clássico jogo da cobrinha, com foco em simplicidade de implementação, organização de assets e documentação. A proposta é servir tanto como jogo casual quanto como material de estudo introdutório para desenvolvimento de jogos 2D com Python.
 
-- organização simples de projeto para ensino;
-- menu inicial funcional;
-- trilha sonora e efeitos sonoros;
-- sprites personalizados para cabeça, corpo e cauda;
-- pontuação em tempo real;
-- pausa durante a partida.
+## Principais funcionalidades
 
-A estrutura foi mantida enxuta para facilitar estudo, manutenção e apresentação do funcionamento do jogo em sala de aula ou em atividades práticas.
-
-## Funcionalidades implementadas
-
-- Menu com botões de **Start**, **Music** e **Exit**.
-- Alternância de música de fundo.
-- Sistema de movimentação por grade.
-- Geração aleatória de maçãs em posições válidas.
-- Crescimento da cobra ao coletar maçãs.
-- Detecção de colisão com paredes.
-- Detecção de colisão com o próprio corpo.
-- Retorno ao menu após o fim da partida.
-- Exibição da pontuação no HUD.
-- Sistema de pausa com tecla de espaço.
+- menu inicial com botões de **Start**, **Music** e **Exit**;
+- movimentação da cobra em grade;
+- sistema de pontuação em tempo real;
+- crescimento da cobra ao coletar maçãs;
+- colisão com paredes e com o próprio corpo;
+- pausa com tecla de espaço;
+- música de fundo com alternância no menu;
+- efeitos sonoros para coleta e game over.
 
 ## Tecnologias utilizadas
 
-- **Python**
+- **Python 3**
 - **Pygame Zero (PgZero)**
-- Biblioteca padrão `random`
+- módulo padrão **random**
 
 ## Como executar
 
@@ -50,7 +39,7 @@ A estrutura foi mantida enxuta para facilitar estudo, manutenção e apresentaç
 pip install pgzero
 ```
 
-3. Execute o jogo na pasta do projeto:
+3. Execute o projeto na pasta raiz:
 
 ```bash
 pgzrun main.py
@@ -58,18 +47,18 @@ pgzrun main.py
 
 ## Controles
 
-- **Setas direcionais**: movem a cobra.
+- **Setas direcionais**: movimentam a cobra.
 - **Barra de espaço**: pausa ou retoma a partida.
 - **Mouse**: interage com os botões do menu.
 
 ## Regras do jogo
 
-- O objetivo é fazer a maior pontuação possível.
-- Cada maçã coletada aumenta a pontuação em **1 ponto**.
-- Ao comer uma maçã, a cobra cresce.
-- O jogo termina se a cabeça da cobra tocar:
+- O objetivo é alcançar a maior pontuação possível.
+- Cada maçã coletada soma **1 ponto**.
+- Ao coletar uma maçã, a cobra cresce.
+- O jogo termina quando a cobra colide com:
   - as bordas da tela;
-  - qualquer parte do próprio corpo.
+  - o próprio corpo.
 
 ## Estrutura do projeto
 
@@ -105,17 +94,18 @@ Jogo_Cobrinha_KodLand-main/
 
 ## Organização dos assets
 
-- `images/`: sprites e plano de fundo.
-- `sounds/`: efeitos sonoros de coleta e derrota.
-- `music/`: trilha principal do jogo.
-- `docs/`: documentação funcional e técnica.
+- `images/`: sprites da cobra, maçã e plano de fundo;
+- `music/`: trilha principal do jogo;
+- `sounds/`: efeitos sonoros de feedback;
+- `docs/`: documentação de design do jogo e design sonoro.
 
-## Observações importantes
+## Observações
 
-- O projeto foi estruturado para ser simples e didático, com a lógica concentrada em um único arquivo principal.
-- O fluxo atual retorna diretamente ao menu quando ocorre **Game Over**, sem uma tela intermediária de resultado.
-- A documentação foi atualizada com base no script existente e nas telas fornecidas do menu e da gameplay.
+- A lógica principal está concentrada em `main.py`, o que torna o projeto mais simples para fins didáticos.
+- O jogo possui dois estados principais: **menu** e **playing**.
+- O botão **Music** controla a trilha de fundo.
+- Após a derrota, o jogo retorna ao menu inicial.
 
 ## Créditos
 
-Desenvolvido por **Arly Alves** em contexto educacional, com proposta de aprendizagem prática sobre lógica de jogos, organização de assets e documentação de projeto.
+Projeto utilizado em contexto educacional para estudo de lógica de jogos, organização de assets e documentação de projeto.
