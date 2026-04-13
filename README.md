@@ -7,7 +7,7 @@ Projeto de um jogo no estilo **Snake**, desenvolvido em **Python** com **Pygame 
 ## Documentação rápida
 
 - [GDD - Game Design Document](docs/GDD.md)
-- [SDD - Software Design Document](docs/SDD.md)
+- [SDD - Sound Design Document](docs/SDD.md)
 
 ## Visão geral
 
