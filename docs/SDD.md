@@ -1,4 +1,4 @@
-# SDD - Software Design Document - Snake Game - KodLand
+# SDD - Sound Design Document - Snake Game - KodLand
 
 ![Tela de gameplay](images/gameplay_screen.png)
 
