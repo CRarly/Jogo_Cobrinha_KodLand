@@ -1,187 +1,160 @@
-# GDD - Snake Game - KodLand
+# GDD - Game Design Document
 
 ![Tela de menu](images/menu_screen.png)
 
-## 1. Visão geral do jogo
+## 1. Visão geral
 
-**Snake Game - KodLand** é um jogo 2D inspirado no clássico Snake. O jogador controla uma cobra em uma área fechada, coleta maçãs para aumentar a pontuação e tenta sobreviver o máximo possível sem colidir com as bordas ou com o próprio corpo.
+**Snake Game - KodLand** é um jogo 2D inspirado no clássico Snake. O jogador controla uma cobra em uma área fechada, coleta maçãs e busca sobreviver o maior tempo possível sem colidir com as bordas ou com o próprio corpo.
 
-A proposta do projeto é unir simplicidade mecânica com boa organização visual e sonora, servindo tanto como jogo casual quanto como exemplo didático de implementação de estados de jogo, movimentação em grade, colisões e documentação.
+A proposta do projeto é combinar uma mecânica clássica, fácil de compreender, com uma estrutura enxuta e didática para estudo de desenvolvimento de jogos com Python.
 
-## 2. Objetivo do jogo
+## 2. Conceito do jogo
 
-O objetivo é obter a maior pontuação possível coletando maçãs em sequência e mantendo a cobra viva pelo maior tempo possível.
+O jogo segue um loop simples e direto:
 
-## 3. Público-alvo
+1. o jogador entra no menu inicial;
+2. inicia a partida;
+3. movimenta a cobra pela tela;
+4. coleta maçãs;
+5. aumenta a pontuação e o tamanho da cobra;
+6. enfrenta dificuldade crescente;
+7. perde ao colidir com a parede ou com o próprio corpo.
 
-- Estudantes iniciantes em desenvolvimento de jogos.
-- Pessoas em processo de aprendizagem de Python e PgZero.
-- Jogadores casuais que reconhecem a mecânica clássica de Snake.
+## 3. Objetivo do jogador
 
-## 4. Gênero e plataforma
+O objetivo é alcançar a maior pontuação possível, mantendo a cobra viva por mais tempo e coletando o máximo de maçãs.
+
+## 4. Público-alvo
+
+- estudantes iniciantes em programação de jogos;
+- pessoas aprendendo Python e Pygame Zero;
+- jogadores casuais familiarizados com o gênero arcade.
+
+## 5. Gênero e plataforma
 
 - **Gênero:** Arcade / Casual
-- **Estilo:** 2D em grade
-- **Plataforma atual:** Desktop
-- **Motor / biblioteca:** Pygame Zero
+- **Formato:** 2D em grade
+- **Plataforma:** Desktop
+- **Biblioteca:** Pygame Zero
 
-## 5. Proposta de experiência
+## 6. Mecânicas principais
 
-A experiência do jogo é direta e rápida:
+### 6.1 Movimentação
 
-- entrar no menu;
-- iniciar a partida;
-- mover a cobra com precisão;
-- coletar itens;
-- aumentar a pontuação;
-- tentar superar a própria marca.
+A cobra se move continuamente em uma grade, com controle por setas direcionais.
 
-O jogo busca ser simples de entender, rápido de jogar e adequado a demonstrações em aula ou a pequenos desafios de programação.
+### 6.2 Coleta
 
-## 6. Loop principal de gameplay
+Ao tocar a maçã, o item é coletado, a pontuação aumenta e uma nova maçã é posicionada em local válido.
 
-O ciclo central da experiência é:
+### 6.3 Crescimento
 
-1. o jogador inicia a partida no menu;
-2. a cobra se move continuamente;
-3. o jogador ajusta a direção com as setas;
-4. a cobra coleta a maçã;
-5. a pontuação aumenta;
-6. a cobra cresce;
-7. o risco de colisão aumenta;
-8. ao ocorrer colisão, a partida termina e retorna ao menu.
+Cada maçã coletada faz a cobra crescer, elevando a complexidade da movimentação.
 
-## 7. Mecânicas principais
+### 6.4 Colisão
 
-### 7.1 Movimentação
-
-A cobra se desloca em uma grade fixa, em passos de tamanho constante. O movimento é contínuo e controlado pelas setas do teclado.
-
-### 7.2 Coleta
-
-Ao tocar a maçã, a cobra coleta o item, cresce e soma um ponto.
-
-### 7.3 Crescimento
-
-Cada item coletado aumenta o comprimento da cobra, elevando a dificuldade progressivamente.
-
-### 7.4 Colisão
-
-O jogo termina quando a cabeça da cobra colide com:
+A partida termina quando a cobra colide com:
 
 - as bordas da tela;
-- qualquer segmento do próprio corpo.
+- o próprio corpo.
 
-### 7.5 Pausa
+### 6.5 Pausa
 
-A tecla de espaço alterna entre pausa e retomada da partida, permitindo interromper a ação temporariamente.
+A tecla de espaço permite pausar e retomar a partida.
 
-### 7.6 Áudio
+## 7. Controles
 
-O jogo possui:
+- **Seta para cima:** mover para cima
+- **Seta para baixo:** mover para baixo
+- **Seta para esquerda:** mover para a esquerda
+- **Seta para direita:** mover para a direita
+- **Espaço:** pausar ou continuar
+- **Mouse:** clicar nos botões do menu
 
-- música de fundo com controle liga/desliga no menu;
-- efeito sonoro ao coletar maçã;
-- efeito sonoro ao perder.
+## 8. Interface
 
-## 8. Controles
+### 8.1 Menu principal
 
-- **Seta para cima:** move para cima
-- **Seta para baixo:** move para baixo
-- **Seta para esquerda:** move para a esquerda
-- **Seta para direita:** move para a direita
-- **Espaço:** pausa/continua o jogo
-- **Mouse:** interage com o menu
+O menu apresenta:
 
-## 9. Interface do usuário
+- título do jogo;
+- botão **Start**;
+- botão **Music**;
+- botão **Exit**.
 
-A interface é dividida em dois contextos principais.
+### 8.2 Gameplay
 
-### 9.1 Menu inicial
+Durante a partida, a interface mostra:
 
-O menu apresenta o título do jogo e três botões centrais:
-
-- **Start**: inicia uma nova partida;
-- **Music**: liga ou desliga a trilha sonora;
-- **Exit**: encerra a aplicação.
-
-### 9.2 HUD durante a partida
-
-Durante o jogo, a interface exibe:
-
-- plano de fundo customizado;
-- cobra com sprites específicos para cabeça, corpo e cauda;
+- fundo do cenário;
+- cobra com cabeça, corpo e cauda;
 - maçã como item coletável;
 - pontuação no canto superior esquerdo;
-- texto de pausa quando o jogo está interrompido.
+- indicação textual de pausa.
 
-## 10. Direção de arte
+## 9. Progressão e desafio
 
-O jogo utiliza uma identidade visual simples, legível e funcional:
+A dificuldade cresce de forma natural. No início, a cobra possui poucos segmentos e há maior liberdade de movimentação. Conforme o jogador coleta maçãs, o tamanho da cobra aumenta e o espaço seguro diminui, tornando mais difícil evitar colisões.
 
-- fundo texturizado para diferenciar a área jogável;
-- sprites próprios para a cobra;
-- item visualmente destacado para coleta;
-- interface limpa, com poucas informações em tela.
-
-A proposta estética favorece clareza visual e fácil entendimento da ação principal.
-
-## 11. Direção sonora
-
-A camada sonora reforça os estados do jogo:
-
-- música contínua para ambientação;
-- som curto para recompensa na coleta;
-- som distinto para o encerramento da rodada.
-
-## 12. Condições de vitória e derrota
-
-### Vitória
-
-Não há tela de vitória final. O jogo é orientado à superação de pontuação.
+## 10. Condições de derrota e vitória
 
 ### Derrota
 
-A derrota ocorre em caso de colisão com paredes ou com o próprio corpo.
+A derrota ocorre quando a cabeça da cobra toca a borda da tela ou qualquer parte do próprio corpo.
+
+### Vitória
+
+Não há uma condição final de vitória. O jogo é baseado em **superação de pontuação**.
+
+## 11. Estilo visual
+
+O projeto utiliza uma apresentação visual simples e funcional:
+
+- plano de fundo texturizado;
+- sprites próprios para cabeça, corpo e cauda;
+- maçã destacada visualmente;
+- HUD minimalista.
+
+## 12. Áudio no design do jogo
+
+O áudio atua como reforço da experiência:
+
+- trilha de fundo para ambientação;
+- som de coleta como recompensa imediata;
+- som de game over como sinalização de fim da rodada.
 
 ## 13. Escopo atual
 
 ### Implementado
 
-- menu funcional;
+- menu jogável;
 - sistema de música;
-- movimentação da cobra;
-- coleta de maçã;
-- crescimento da cobra;
+- gameplay funcional;
 - pontuação;
-- colisão com bordas e corpo;
 - pausa;
-- efeitos sonoros;
-- assets organizados em pastas.
+- colisões;
+- efeitos sonoros.
 
-### Fora do escopo atual
+### Não implementado
 
-- ranking de recordes;
+- tela exclusiva de game over;
+- sistema de recordes;
 - níveis de dificuldade;
-- tela dedicada de game over;
-- animações avançadas;
-- efeitos visuais adicionais;
+- efeitos visuais avançados;
 - suporte mobile.
 
-## 14. Melhorias futuras sugeridas
+## 14. Melhorias futuras
 
-- adicionar tela de **Game Over** com opção de reinício;
-- registrar recorde local;
-- incluir níveis de velocidade progressiva;
-- adicionar efeitos visuais de transição;
-- melhorar feedback visual do botão de música;
-- permitir seleção de tema visual.
+- adicionar tela de game over com opção de reinício;
+- criar sistema de recorde local;
+- aumentar a velocidade ao longo da partida;
+- incluir feedback visual para botões;
+- adicionar variações de cenário e trilha.
 
 ## 15. Captura de gameplay
 
 ![Tela de gameplay](images/gameplay_screen.png)
 
-## 16. Resumo de design
+## 16. Resumo
 
-O projeto cumpre bem uma proposta de jogo compacto e didático. Seu principal valor está na clareza das mecânicas, na simplicidade do fluxo e na facilidade de entendimento para fins de estudo, demonstração e evolução futura.
-
+O projeto é compacto, funcional e adequado para uso didático. Seu valor está na clareza das mecânicas, na facilidade de compreensão do fluxo de jogo e na possibilidade de expansão futura.
