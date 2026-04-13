@@ -1,347 +1,135 @@
-# SDD - Sound Design Document - Snake Game - KodLand
+# SDD - Sound Design Document
 
 ![Tela de gameplay](images/gameplay_screen.png)
 
 ## 1. Objetivo do documento
 
-Este documento descreve a estrutura técnica do projeto **Snake Game - KodLand**, detalhando organização de arquivos, fluxo de execução, estados do jogo, regras implementadas no código e responsabilidades das principais funções.
+Este documento descreve o **design sonoro** do projeto **Snake Game - KodLand**, detalhando a função da música e dos efeitos sonoros, os pontos de disparo no jogo, o papel de cada asset de áudio e diretrizes para evolução futura da camada sonora.
 
-O objetivo é facilitar manutenção, reaproveitamento didático e futuras evoluções do jogo.
+## 2. Visão geral da proposta sonora
 
-## 2. Stack técnica
+O jogo possui uma proposta sonora simples e funcional, coerente com sua natureza arcade e didática. O áudio foi pensado para cumprir três papéis principais:
 
-- **Linguagem:** Python
-- **Biblioteca principal:** Pygame Zero (PgZero)
-- **Módulos utilizados no script:** `pgzrun` e `random`
-- **Recursos externos:** imagens PNG, sons WAV e música MP3
+- reforçar a ambientação da partida;
+- oferecer feedback imediato às ações do jogador;
+- sinalizar claramente eventos importantes do jogo.
 
-## 3. Estrutura do projeto
+Como o projeto tem escopo enxuto, a trilha sonora e os efeitos são poucos, mas cumprem bem a função de apoiar a experiência sem poluir a partida.
 
-```text
-Jogo_Cobrinha_KodLand-main/
-├── main.py
-├── README.md
-├── docs/
-│   ├── GDD.md
-│   ├── SDD.md
-│   └── images/
-│       ├── gameplay_screen.png
-│       └── menu_screen.png
-├── images/
-│   ├── apple.png
-│   ├── background.png
-│   ├── snake.png
-│   ├── snake_head_down.png
-│   ├── snake_head_left.png
-│   ├── snake_head_right.png
-│   ├── snake_head_up.png
-│   ├── snake_tail_down.png
-│   ├── snake_tail_left.png
-│   ├── snake_tail_right.png
-│   ├── snake_tail_up.png
-│   └── thumbnail.png
-├── music/
-│   └── music.mp3
-└── sounds/
-    ├── collect.wav
-    └── gameover.wav
-```
+## 3. Objetivos do áudio
 
-## 4. Arquivo principal
+O design sonoro busca:
 
-Toda a lógica do jogo está concentrada em `main.py`. Esse arquivo responde por:
+- criar uma base de ambientação contínua durante a gameplay;
+- reforçar a sensação de recompensa ao coletar a maçã;
+- comunicar o encerramento da rodada de forma clara;
+- manter uma implementação simples para fins educacionais.
 
-- definição do tamanho da janela;
-- controle do estado atual do jogo;
-- desenho do menu e da gameplay;
-- atualização da cobra em tempo controlado;
-- detecção de colisões;
-- geração da maçã;
-- entrada por teclado e mouse;
-- acionamento de música e efeitos sonoros.
+## 4. Inventário de assets sonoros
 
-## 5. Arquitetura geral
+## 4.1 Música
 
-A arquitetura do projeto é simples e baseada em **estado global + funções de ciclo do PgZero**.
+| Arquivo | Tipo | Função |
+|---|---|---|
+| `music/music.mp3` | Trilha de fundo | Ambientação principal da partida |
 
-### 5.1 Estados principais
+## 4.2 Efeitos sonoros
 
-O jogo utiliza o estado textual `game_state` para alternar entre:
+| Arquivo | Tipo | Função |
+|---|---|---|
+| `sounds/collect.wav` | SFX | Feedback de coleta da maçã |
+| `sounds/gameover.wav` | SFX | Feedback de derrota / fim da rodada |
 
-- `menu`
-- `playing`
+## 5. Papel de cada elemento sonoro
 
-Além disso, há flags auxiliares:
+### 5.1 Música de fundo
 
-- `music_on`: controla música ligada/desligada;
-- `dead`: evita repetição do som de derrota;
-- `paused`: indica pausa durante a partida.
+A música principal acompanha a partida quando o jogador inicia o jogo e a opção de música está ativa. Sua função é sustentar a ambientação e evitar sensação de vazio durante a gameplay.
 
-### 5.2 Entidades do jogo
+Além disso, o botão **Music** no menu permite alternar entre música ligada e desligada, oferecendo ao jogador um controle simples sobre a trilha.
 
-As entidades principais são representadas por estruturas simples.
+### 5.2 Som de coleta
 
-- **Cobra:** lista de tuplas `(x, y)` com segmentos em grade.
-- **Maçã:** tupla `(x, y)` em grade.
-- **Botões do menu:** dicionário com áreas clicáveis usando `Rect`.
+O som `collect.wav` é disparado quando a cabeça da cobra toca a maçã. Ele atua como um feedback positivo e imediato, reforçando a ação de sucesso do jogador.
 
-## 6. Configurações base
+Esse tipo de resposta sonora é importante porque confirma a coleta sem exigir que o jogador desvie o olhar da movimentação principal.
 
-O jogo define:
+### 5.3 Som de game over
 
-- `WIDTH = 640`
-- `HEIGHT = 480`
-- `TILE_SIZE = 20`
+O som `gameover.wav` é reproduzido no momento em que ocorre colisão fatal. Sua função é marcar a transição brusca entre o estado de jogo e o retorno ao menu, deixando evidente que a rodada foi encerrada.
 
-Com isso, a área jogável opera em uma grade lógica de:
+## 6. Eventos de disparo no código
 
-- **32 colunas** (`640 / 20`)
-- **24 linhas** (`480 / 20`)
+Com base no script `main.py`, os eventos sonoros estão organizados da seguinte forma:
 
-## 7. Variáveis globais relevantes
+| Evento | Ação sonora |
+|---|---|
+| Clique em **Start** com música ativada | `music.play("music")` |
+| Clique no botão **Music** para ativar | `music.play("music")` |
+| Clique no botão **Music** para desativar | `music.stop()` |
+| Cobra coleta a maçã | `sounds.collect.play()` |
+| Cobra perde a partida | `sounds.gameover.play()` |
 
-### 7.1 Controle de jogo
+## 7. Fluxo sonoro da experiência
 
-- `game_state`
-- `music_on`
-- `dead`
-- `paused`
-- `score`
+O fluxo sonoro do jogo pode ser resumido assim:
 
-### 7.2 Cobra
+1. o jogador entra no menu em silêncio ou com música já ativada;
+2. ao iniciar a partida, a trilha de fundo pode começar;
+3. durante o jogo, cada coleta gera um efeito sonoro curto;
+4. ao perder, o som de game over marca o fim da rodada;
+5. o jogo retorna ao menu.
 
-- `snake`
-- `direction`
-- `new_direction`
-- `growing`
+Esse fluxo é simples, mas suficiente para apoiar a leitura do estado atual da partida.
 
-### 7.3 Item coletável
+## 8. Função do som na jogabilidade
 
-- `apple`
+Mesmo com poucos elementos, o áudio contribui diretamente para a usabilidade:
 
-### 7.4 Controle de atualização
+- ajuda a confirmar ações do jogador;
+- melhora a percepção de resposta do sistema;
+- diferencia momentos positivos e negativos;
+- torna a experiência menos seca e mais envolvente.
 
-- `frame_count`
-- `frame_delay`
+## 9. Diretrizes de mixagem
 
-A atualização da cobra não ocorre a cada frame desenhado. O script usa `frame_delay = 6`, o que gera aproximadamente **10 atualizações por segundo** quando a aplicação opera a 60 FPS.
+Como o projeto utiliza poucos sons simultâneos, a mixagem é naturalmente simples. Ainda assim, algumas diretrizes são recomendadas:
 
-## 8. Fluxo de execução
+- a trilha de fundo deve permanecer abaixo do volume dos efeitos de feedback;
+- `collect.wav` deve ser curto e perceptível;
+- `gameover.wav` deve se destacar da trilha, marcando claramente o fim da rodada;
+- evitar sons excessivamente longos para não sobrepor ações rápidas da gameplay.
 
-### 8.1 Inicialização
+## 10. Coerência estética sonora
 
-Ao iniciar o script:
+O jogo possui proposta visual simples e arcade. Por isso, o áudio ideal segue a mesma direção:
 
-- a janela é configurada;
-- a cobra recebe tamanho inicial de três segmentos;
-- a maçã recebe posição inicial;
-- o estado começa em `menu`.
+- sons diretos;
+- respostas rápidas;
+- trilha contínua e discreta;
+- baixo número de camadas sonoras.
 
-### 8.2 Desenho
+Essa coerência favorece a clareza da experiência e se alinha ao escopo do projeto.
 
-A função `draw()` atua como roteadora visual:
+## 11. Limitações atuais
 
-- chama `draw_menu()` se o estado for `menu`;
-- chama `draw_game()` se o estado for `playing`.
+No estado atual, o projeto ainda não possui:
 
-### 8.3 Atualização
+- variação de trilha por estado do jogo;
+- efeitos para navegação no menu;
+- som específico de pausa;
+- camadas adicionais de ambientação;
+- sistema de ajuste fino de volume por categoria.
 
-A função `update()` só movimenta a cobra quando:
+## 12. Melhorias futuras sugeridas
 
-- o estado é `playing`;
-- o jogo não está pausado;
-- o contador de frames alcança o atraso configurado.
+- adicionar efeito sonoro para clique de botão;
+- incluir som específico de pausa e retomada;
+- separar volume de música e efeitos;
+- criar uma trilha exclusiva para menu;
+- adicionar variação sonora conforme aumento da dificuldade;
+- trabalhar transições mais suaves entre menu e gameplay.
 
-### 8.4 Encerramento de rodada
+## 13. Resumo
 
-Quando ocorre colisão, `game_over()`:
-
-- toca o som de derrota;
-- altera `game_state` para `menu`;
-- marca `dead = True`.
-
-## 9. Responsabilidade das funções
-
-### `draw()`
-Decide qual tela deve ser desenhada.
-
-### `draw_menu()`
-Renderiza o fundo do menu, o título e os botões. O botão de música muda de cor quando a trilha está desligada.
-
-### `draw_game()`
-Renderiza o fundo, a cobra, a maçã, a pontuação e a mensagem de pausa.
-
-### `update()`
-Controla a frequência de atualização da cobra com base no contador de frames.
-
-### `update_snake()`
-Executa a lógica central da partida:
-
-- valida mudança de direção;
-- calcula nova posição da cabeça;
-- verifica colisões;
-- atualiza a lista da cobra;
-- trata coleta de maçã;
-- aumenta pontuação;
-- controla crescimento.
-
-### `place_new_apple()`
-Gera aleatoriamente uma nova posição para a maçã, garantindo que ela não apareça sobre a cobra.
-
-### `game_over()`
-Centraliza o comportamento de fim da rodada.
-
-### `on_key_down(key)`
-Processa entrada do teclado durante a gameplay:
-
-- mudança de direção;
-- pausa com espaço.
-
-### `on_mouse_down(pos)`
-Processa cliques no menu:
-
-- iniciar partida;
-- alternar música;
-- sair da aplicação.
-
-## 10. Lógica da cobra
-
-A cobra é representada por uma lista ordenada de segmentos.
-
-Exemplo inicial:
-
-```python
-snake = [(10, 10), (9, 10), (8, 10)]
-```
-
-- `snake[0]` representa a cabeça.
-- Os demais itens representam corpo e cauda.
-
-A cada atualização:
-
-1. uma nova cabeça é criada na direção atual;
-2. essa cabeça é inserida no início da lista;
-3. se não houve coleta, o último segmento é removido;
-4. se houve coleta, a remoção não acontece e a cobra cresce.
-
-## 11. Controle de direção
-
-A direção atual fica em `direction`, enquanto a próxima intenção do jogador fica em `new_direction`.
-
-Antes de aplicar a mudança, o código verifica se a nova direção não é o oposto exato da direção atual. Isso evita reversão instantânea sobre o próprio eixo.
-
-## 12. Regras de colisão
-
-### 12.1 Bordas
-
-A nova cabeça precisa permanecer dentro dos limites da grade.
-
-Se `new_head` sair do intervalo válido, ocorre derrota.
-
-### 12.2 Corpo
-
-Se a nova cabeça coincidir com qualquer segmento existente da cobra, ocorre derrota.
-
-## 13. Sistema de pontuação
-
-A pontuação é armazenada em `score`.
-
-Sempre que a cabeça coincide com a posição da maçã:
-
-- `score += 1`
-- toca `sounds.collect`
-- `growing = True`
-- uma nova maçã é gerada
-
-## 14. Renderização dos sprites
-
-O desenho da cobra é separado em três partes:
-
-- **cabeça** com sprite direcional;
-- **corpo** com sprite neutro repetido;
-- **cauda** com sprite direcional.
-
-A orientação é calculada comparando posições entre segmentos vizinhos.
-
-### Sprites utilizados
-
-- `snake_head_up`
-- `snake_head_down`
-- `snake_head_left`
-- `snake_head_right`
-- `snake`
-- `snake_tail_up`
-- `snake_tail_down`
-- `snake_tail_left`
-- `snake_tail_right`
-- `apple`
-- `background`
-
-## 15. Áudio
-
-### Música
-
-A música de fundo é controlada pelo objeto `music` do PgZero.
-
-- ao iniciar partida, a música toca se `music_on` estiver verdadeiro;
-- no menu, o botão **Music** alterna entre tocar e parar.
-
-### Efeitos
-
-- `sounds.collect.play()` ao coletar maçã;
-- `sounds.gameover.play()` ao perder.
-
-## 16. Interface e usabilidade
-
-O menu foi implementado com botões simples baseados em `Rect`, o que torna a navegação direta.
-
-Na gameplay:
-
-- a pontuação fica em posição de destaque no canto superior esquerdo;
-- o texto `PAUSED` aparece centralizado quando a partida está pausada.
-
-## 17. Dependências e execução
-
-### Instalação
-
-```bash
-pip install pgzero
-```
-
-### Execução
-
-```bash
-pgzrun main.py
-```
-
-## 18. Observações técnicas identificadas na análise
-
-### 18.1 Organização
-
-A organização do projeto está adequada para um jogo pequeno e didático. Os assets estão corretamente separados por tipo.
-
-### 18.2 Acoplamento
-
-A lógica está concentrada em um único arquivo. Isso facilita leitura inicial, mas aumenta o acoplamento entre estado, renderização, entrada e regras de jogo.
-
-### 18.3 Estado de game over
-
-O fluxo atual retorna diretamente ao menu após derrota. Não existe uma tela intermediária de resultado ou reinício.
-
-### 18.4 Identificação visual do título
-
-O repositório e a documentação usam a identidade **KodLand**, enquanto o script pode conter uma string de título no menu que merece padronização conforme a versão final desejada do projeto.
-
-## 19. Melhorias técnicas sugeridas
-
-- separar lógica de jogo, interface e configuração em módulos diferentes;
-- criar uma função de reinício dedicada;
-- adicionar tela de game over com pontuação final;
-- registrar recorde local em arquivo simples;
-- substituir parte do estado global por estrutura orientada a objeto ou por camadas de sistema;
-- adicionar testes básicos para funções puras, como geração de maçã e validação de colisão.
-
-## 20. Conclusão técnica
-
-O projeto é consistente para fins educacionais, apresenta fluxo funcional completo e utiliza corretamente recursos centrais do PgZero para um jogo arcade simples. A base atual é suficiente para ensino, demonstração e expansão incremental do sistema.
-
+O design sonoro de **Snake Game - KodLand** é pequeno em escopo, mas bem alinhado ao projeto. A trilha sustenta a ambientação, o som de coleta reforça recompensa e o som de game over comunica falha com clareza. Para um jogo didático e introdutório, a camada sonora atual é suficiente, organizada e facilmente expansível.
