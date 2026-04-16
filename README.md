@@ -1,6 +1,6 @@
 # Snake Game - KodLand
 
-![Thumbnail do jogo](docs/images/gameplay_screen1.png)
+![Thumbnail do jogo](docs/images/gameplay_screen.png)
 
 Projeto de um jogo no estilo **Snake**, desenvolvido em **Python** com **Pygame Zero (PgZero)**. O jogador controla a cobra em uma grade, coleta maçãs para aumentar a pontuação e precisa evitar colisões com as bordas da tela e com o próprio corpo.
 
